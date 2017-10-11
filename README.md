@@ -1,1 +1,1 @@
-# EOYProject
+The purpose of this project is to utilise modern web technologies such as WebRTC in order to create an assistive technology capable of helping patients struggling with a wide variety of mental health issues via internet counselling. Through the use of WebRTC a video chat can be established between the patient and a counsellor. Establishing a peer to peer connection utilising PeerJS allows for many concerns regarding privacy to be minimized. This is due to not going through any server other than a signalling server to broker the connection. 
