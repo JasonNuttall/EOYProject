@@ -1,0 +1,59 @@
+<div class ="container">
+
+<div class="panel-group" id="accordion">
+
+ <script>
+  $(document).ready(function() {
+    $("#edit").on('click',function() {
+      $("#title").removeClass("hidden");
+      $("#content").removeClass("hidden");
+    })
+    $("#save").click(function(){
+        $.post("/updateblog",{
+          postid:$("#postid").val(),
+          content: $("#content").val(),
+          title: $("#title").val()
+        }).done(function() {
+            alert("saved")
+           location.reload();
+        });
+      });
+    $("#del").click(function() {
+      $.post("/delblog",{
+        postid:$("#postid").val()
+      }).done(function() {
+        alert("Deleted")
+           location.reload();
+    });
+    });
+  });
+  </script>
+	{{#each posts}}
+ 
+   <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+
+	    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{this.id}}">{{this.title}}	<em> Author: {{this.author}}</em></a> <button id = "edit" name = "edit" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i>
+      <button id = "save" name = "save"data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-save"></i>
+         <button id = "del" name = "del" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-erase"></i>
+      </h4>
+      </div>
+      <div id="collapse{{this.id}}" class="panel-collapse collapse in">
+        <div class="panel-body">
+<article><p>
+<p> Content: </br> {{this.content}}
+  </p>
+</article> 
+ <input class = "hidden"id = "postid"name ="postid" type="text" value="{{this.id}}">
+ <input class = "hidden"id = "title"name ="title" type="text" value="{{this.title}}">
+ <textarea class = "hidden" id = "content"name ="content"> {{this.content}} </textarea>
+</p>
+</div>
+</div>
+      </div>
+ 
+{{/each}}
+
+</div>
+

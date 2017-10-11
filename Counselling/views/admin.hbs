@@ -1,0 +1,229 @@
+<style>
+.clickable
+{
+    cursor: pointer;
+}
+
+.clickable .glyphicon
+{
+    background: rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px
+}
+
+.panel-heading span
+{
+    margin-top: -23px;
+    font-size: 15px;
+    margin-right: -9px;
+}
+a.clickable { color: inherit; }
+a.clickable:hover { text-decoration:none; }
+</style>
+<div class ="jumbotron">
+<h3>This is the admin page</h3>
+<div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Users</h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    <h3>User management</h3>
+
+                    <h4> All users</h4>
+                    <select>
+{{#each account}}
+<option> {{this.username}}<option>
+	{{/each}}
+                     </select>
+<div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://placehold.it/380x500" class="img-circle img-responsive"> </div>
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>User Bio:</td>
+                        <td><input id = "userBio"name ="userBio" type="text" value="{{user.biography}}"></td>
+                      </tr>
+                      <tr>
+                        <td>Join Date:</td>
+                        <td>{{moment user.joindate format="DD MMMM YYYY"}}</td>  
+                      </tr>
+                      <tr>
+                        <td>Date of Birth:</td>
+                        <td>{{moment user.dob format ="DD MMMM YYYY"}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Gender:</td>
+                        <td><input id = "gender"name ="gender"type="text" value="{{user.gender}}"></td>
+                      </tr>
+                        <tr>
+                        <td>Home Address:</td>
+                        <td><input id = "address"name ="address" type="text" value="{{user.address}}"></td>
+                      </tr>
+                      <tr>
+                        <td>Email:</td>
+                        <td><input id = "email"name ="email" type="text" value="{{user.email}}"></a></td>
+                      </tr>
+                        <td>Phone Number:</td>
+                        <td><input id = "contactno" name ="contactno"type="text" value="{{user.contactno}}"><br><br><input id = "altcontactno" name ="altcontactno"type="text" value="{{user.altcontactno}}">
+                        </td> 
+                      </tr>
+                         <td>Next appointment:</td>
+                        <td>
+                          <div class="input-group date form_datetime " data-date="{{moment user.appointment format ="DD MMMM YYYY hh:mm ZZ" }}" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                       <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+        <input type="hidden" id="dtp_input1" value="{{moment user.appointment format ="DD MMMM YYYY hh:mm ZZ" }}" />
+                        </td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                          <script type="text/javascript">
+  $('.form_datetime').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    });
+  $(document).on('click', '.panel-heading span.clickable', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('click', '.panel div.clickable', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+
+
+  $(document).ready(function() {
+    $('.panel-heading span.clickable').click();
+    $('.panel div.clickable').click();
+    $("#saveuser").click(function(){
+        $.post("/editUserData",{
+          userBio: $('#userBio').val(),
+          gender: $("#gender").val(),
+          address: $("#address").val(),
+          email: $("#email").val(),
+          contactno: $("#contactno").val(),
+          altcontactno: $("#altcontactno").val(),
+          appointment: $("#dtp_input1").val()
+        }).done(function() {
+
+      window.location.replace("/admin");
+        });
+
+});
+  });
+</script>
+                  
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>Quick links</h3>
+                        <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/adminregister">register a user</a></button>
+<button id  = "saveuser"class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save">save</button>
+                    </div>
+              
+                    </div>
+              </div>
+            </div>
+ 
+        </div>
+    </div>
+          <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Blogs</h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                    blog management
+                                       <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/generateblog">Generate blog</a></button>
+                                                          <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/blog">blog page</a></button>
+            </div>
+        </div>
+         </div>
+          <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Database</h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                   Database management 
+                   <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/backup">backup db</a></button>
+            </div>
+        </div>
+         </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading clickable">
+                    <h3 class="panel-title">
+                        Appointment</h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+                	Appointment management tools
+                	<h3 class="text-center">
+        Scheduled Appointments</h3>
+         <table class="table table-striped">
+
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Patient name</th>
+              <th>With</th>
+            </tr>
+          </thead>   
+          <tbody>
+          	         	{{#each appointments}}
+            <tr>
+              <td>{{     moment this.appointment_date format="DD MMMM YYYY"}}</td>
+              <td>{{     moment this.appointment_date format="HH:mm:ss"}}</td>
+              <td>{{this.patient}}</td>
+              <td>{{this.counsellor}}</td>
+            </td>                                       
+          </tr>
+	{{/each}}
+        </tbody>
+</table>    <div class="panel panel-default">
+                    <div class="panel-body text-center">
+                        <h3>Quick links</h3>
+                        <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/rota">rota</a></button>
+<button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save"><a href="/generateappointment">generate appointment</a></button>
+ 
+                    </div>
+              
+                    </div>
+            </div>
+        </div>

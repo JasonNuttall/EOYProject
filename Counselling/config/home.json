@@ -1,0 +1,7 @@
+{
+ "data": {
+  "host": "wibble.homenet.io",
+  "ssl_key": "homenet.io.key",
+  "ssl_crt": "homenet.io.crt"
+ }
+}

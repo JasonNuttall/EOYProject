@@ -1,0 +1,77 @@
+
+    <div id="legend">
+      <legend class="">Enter appointment Details
+      {{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}</legend>
+    </div>
+   
+   <div class="container">
+      <div class="controls">
+<select class="selectpicker" name= "selectpicker" >
+{{#each doc}}
+<option>{{this.username}} </option>
+{{/each}}
+
+</select>
+</div>
+
+
+ <div style="overflow:hidden;">
+   <div class="control-group">
+   <div class="controls">
+                <div class="input-group date form_datetime col-md-5" data-date="2017-05-26T05:25:07Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                       <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+        <input type="hidden" id="dtp_input1" value="" /><br/>
+  </div>
+</div>
+</div>
+</div>
+     <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="patient_name">patient name</label>
+      <div class="controls">
+        <input type="text" id="patient_name" name="patient_name" placeholder="John smith" class="input-xlarge">
+        <p class="help-block">Joe bloggs</p>
+      </div>
+    </div>
+    <div class="control-group">
+     
+         <script type="text/javascript">
+  $('.form_datetime').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    });
+
+
+        $(document).ready(function() {
+
+    $("button").click(function(){
+        $.post("/generateAppointment",{
+          counsellor: $('.selectpicker option:selected').val(),
+          date: $("#dtp_input1").val(),
+          patient_name: $("#patient_name").val()
+        });
+
+});
+  });
+    </script>
+
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Create Appointment</button>
+      </div>
+    </div>
+    <div>
+  
+
+

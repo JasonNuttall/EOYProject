@@ -1,0 +1,39 @@
+<div class ="jumbotron">
+<form class="form-horizontal" action='/generateblog' method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Submit blog entry
+      {{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}</legend>
+    </div>
+    <div class ="container">
+<div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="postTitle">Blog Title</label>
+      <div class="controls">
+        <input type="text" id="postTitle" name="postTitle" placeholder="" class="input-xlarge">
+        <p class="help-block">Describe post</p>
+      </div>
+    </div>
+        <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="username">Blog content</label>
+      <div class="controls">
+        <textarea id="username" name="postContent" placeholder="" class="input-xlarge"> </textarea>
+        <p class="help-block">place content here</p>
+      </div>
+    </div> 
+
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>                     
+</div>
+</div>

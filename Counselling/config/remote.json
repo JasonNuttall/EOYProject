@@ -1,0 +1,7 @@
+{
+ "data": {
+  "host": "khomenet.hopto.org",
+  "ssl_key": "khomenet.io.key",
+  "ssl_crt": "khomenet.io.crt"
+ }
+}

@@ -1,0 +1,236 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    form * {
+    border-radius:0 !important;
+}
+
+form > fieldset > legend {
+    font-size:120%;
+}
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+	html,
+body {
+    height: 100%;
+
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    .footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+
+    }
+}
+    /* Set black background color, white text and some padding */
+  
+    .footer {
+      height:100%;
+      bottom:0;
+    	height: 50px;
+    background-color: #555;
+      color: white;
+      text-align: center;
+
+    }
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -50px;
+}
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+    #wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+margin:0 auto;
+    }
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+.blogShort{ border-bottom:1px solid #ddd;}
+.add{background: #333; padding: 10%; height: 300px;}
+
+
+.btn-blog {
+    color: #ffffff;
+    background-color: #000066;
+    border-color: #000066;
+    border-radius:0;
+    margin-bottom:10px
+}
+.btn-blog:hover,
+.btn-blog:focus,
+.btn-blog:active,
+.btn-blog.active,
+.open .dropdown-toggle.btn-blog {
+    color: white;
+    background-color:#34ca78;
+    border-color: #34ca78;
+}
+ h2{color:#34ca78;}
+ .margin10{margin-bottom:10px; margin-right:10px;}
+ 
+ #messenger-wrapper {
+  width: 400px;
+  float: left;
+}
+
+.hidden {
+  display: none;
+}
+
+input[type=text] {
+  margin-bottom: 10px;
+}
+
+.camera {
+  text-align: center;
+}
+
+#connect {
+  background-color: #fff;
+  padding: 20px;
+}
+
+#my-camera {
+top: 90%;
+width: 20%;
+  padding:5px,5px,5px,5px;
+        border: 2px solid;
+}
+
+#peer-camera {
+  top: 10%;
+  width :60%;
+    border: 2px solid;
+    border-bottom-left-radius: 2em;
+}
+  #right {
+    position: absolute;
+    top: 10%;
+    bottom: 0;
+    right: 0;
+    overflow-y: scroll;
+    width: 25%;
+      height:30%;
+}
+
+.mute-video {
+    background:url(/images/MicOff.png) no-repeat center;
+    background-size:32px;
+        border:0;
+    width:32px;
+    height:32px;
+}
+
+.unmute-video {
+    background:url(/images/MicOn.png) no-repeat center;
+    background-size:32px;
+}
+.disable-camera {
+    background:url(/images/CamOff.png) no-repeat center;
+    background-size:32px;
+    border:0;
+    width:32px;
+    height:32px;
+   
+}
+#chat-input {
+     position: absolute;
+    top: 45%;
+       bottom: 0;
+    right: 0;
+    width: 25%;
+      height:30%;
+}
+ #messages { list-style-type: none; margin: 0; padding: 0; text-align: left; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #a0c1f7; }
+.enable-camera {
+    background:url(/images/CamOn.png) no-repeat center;
+    background-size:32px;
+}
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.dropdown-user:hover {
+    cursor: pointer;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:20px;
+}

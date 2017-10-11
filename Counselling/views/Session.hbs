@@ -1,0 +1,208 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+  <script src="/javascripts/jquery-3.2.1.js"></script>
+  <script src="/javascripts/handlebars.min.js"></script>
+  <script src="/javascripts/peer.min.js"></script>
+  <script>
+  $(function(){
+
+  var messages = [];
+  var peer_id, name, conn;
+
+var peer = new Peer({host: '{{session_host}}', port: 8000, path: '/api'});
+  peer.on('open', function(){
+    $('#id').text(peer.id);
+  });
+  
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+  function getVideo(callback){
+    navigator.getUserMedia({audio: true, video: true}, callback, function(error){
+      console.log(error);
+      alert('An error occured. Please try again');
+    });
+  }
+
+  getVideo(function(stream){
+    window.localStream = stream;
+    onReceiveStream(stream, 'my-camera');
+  });
+
+  function onReceiveStream(stream, element_id){
+    var video = $('#' + element_id + ' video')[0];
+    video.src = window.URL.createObjectURL(stream);
+    window.peer_stream = stream;
+  }
+
+$(".mute-video").click(function () {
+    if (window.localStream.getAudioTracks()[0].enabled) {
+        window.localStream.getAudioTracks()[0].enabled = false;
+        $(this).addClass('unmute-video');
+
+    } else {
+       window.localStream.getAudioTracks()[0].enabled = true;
+        $(this).removeClass('unmute-video');
+    }
+
+});
+$(".disable-camera").click(function() {
+
+    if (window.localStream.getVideoTracks()[0].enabled) {
+        window.localStream.getVideoTracks()[0].enabled = false;
+        $(this).addClass('enable-camera');
+
+    } else {
+       window.localStream.getVideoTracks()[0].enabled = true;
+        $(this).removeClass('enable-camera');
+    }
+
+
+})
+  $('#login').click(function(){
+    name =  '{{user.username}}';
+    peer_id = '{{user.counsellor}}';
+    if(peer_id){
+      conn = peer.connect(peer_id, {metadata: {
+        'username': name
+      }});
+      conn.on('data', handleMessage);
+    }
+
+    $('#chat').removeClass('hidden');
+    $('#chat-input').removeClass('hidden');
+    $('#connect').addClass('hidden');
+  });
+
+  peer.on('connection', function(connection){
+    conn = connection;
+    peer_id = connection.peer;
+    conn.on('data', handleMessage);
+
+    $('#connected_peer_container').removeClass('hidden');
+    $('#connected_peer').text(connection.metadata.username);
+  });
+
+  function handleMessage(data){
+    messages.push(data);
+    var sender = data.from;
+    var text = data.text;
+  $('#messages').append($('<li>').text(sender+' : ' +text));
+  maintainScroll()
+  }
+
+  function sendMessage(){
+    var text = $('#message').val();
+    var data = {'from': name, 'text': text};
+
+    conn.send(data);
+    handleMessage(data);
+    $('#message').val('');
+    maintainScroll()
+  }
+function maintainScroll() {
+  $('#right').scrollTop(1E10);
+}
+  $('#message').keypress(function(e){
+    if(e.which == 13){
+      sendMessage();
+      maintainScroll()
+    }
+  });
+
+  $('#send-message').click(sendMessage);
+
+  $('#call').click(function(){
+    console.log('now calling: ' + peer_id);
+    console.log(peer);
+    var call = peer.call(peer_id, window.localStream);
+    call.on('stream', function(stream){
+      window.peer_stream = stream;
+      onReceiveStream(stream, 'peer-camera');
+      $('#call').addClass('hidden');
+      $('#hangup').removeClass('hidden');
+    });
+  });
+$('#hangup').click(function() {
+ 
+  if (confirm('This will end the session! are you sure you wish to hang up?')) {
+  peer.disconnect();
+   console.log('Disconnecting '+peer_id)
+} else {
+    // Do nothing!
+}
+
+})
+  peer.on('call', function(call){
+    onReceiveCall(call);
+  });
+
+  function onReceiveCall(call){
+    call.answer(window.localStream);
+    call.on('stream', function(stream){
+      window.peer_stream = stream;
+      onReceiveStream(stream, 'peer-camera');
+    });
+  }
+
+});
+</script>
+
+  </head>
+  <body>
+    <div id="container">
+<div class = "row">
+      <!-- Display the video of the remote peer -->
+      <div id="peer-camera" class="camera">
+        <h1> Counsellors Camera</h1>
+        <video width="100%" autoplay></video>
+      </div>
+
+      <div id="messenger-wrapper">
+        <div class="container">
+          
+
+          <div id="connect">
+            
+            <div id="connected_peer_container" class="hidden">
+              Connected Peer:
+              <span id="connected_peer"></span>
+            </div>
+            <button id="login">Connect to session</button>
+          </div>
+
+          <div id="chat" class="hidden">
+            <div class = "col-sm-4" id = "right" >
+            <div id="messages-container">
+              <ul id="messages"></ul>
+            </div>
+            <div id="message-container">
+
+            </div>
+
+          </div>
+          <div id= "chat-input" class ="hidden">
+                         <input type="text" name="message" id="message" placeholder="Type message..">
+              <button id="send-message">Send</button>
+              <button id="call">Call</button>
+              <button id = "hangup" class = "hidden">hangup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+</div>
+<duv class = "container-fluid" float left>
+      <!-- Display video of the current user -->
+      <div id="my-camera" class="camera">
+        <h1> Your video</h1>
+        <video muted width="100%" autoplay></video>
+          <button class="disable-camera"></button>
+        <button class="mute-video"></button>
+      </div>
+    </div>
+
+</div>
+  </body>
+</html>

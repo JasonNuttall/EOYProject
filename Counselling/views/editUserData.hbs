@@ -1,0 +1,101 @@
+<h1> Welcome {{user.username}} to your user management page </h1>
+  <script src="/javascripts/userprofile.js"></script>
+<div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+   
+   
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{user.username}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://placehold.it/380x500" class="img-circle img-responsive"> </div>
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>User Bio:</td>
+                        <td><input id = "userBio"name ="userBio" type="text" value="{{user.biography}}"></td>
+                      </tr>
+                      <tr>
+                        <td>Join Date:</td>
+                        <td>{{moment user.joindate format="DD MMMM YYYY"}}</td>  
+                      </tr>
+                      <tr>
+                        <td>Date of Birth:</td>
+                        <td>{{moment user.dob format ="DD MMMM YYYY"}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Gender:</td>
+                        <td><input id = "gender"name ="gender"type="text" value="{{user.gender}}"></td>
+                      </tr>
+                        <tr>
+                        <td>Home Address:</td>
+                        <td><input id = "address"name ="address" type="text" value="{{user.address}}"></td>
+                      </tr>
+                      <tr>
+                        <td>Email:</td>
+                        <td><input id = "email"name ="email" type="text" value="{{user.email}}"></a></td>
+                      </tr>
+                        <td>Phone Number:</td>
+                        <td><input id = "contactno" name ="contactno"type="text" value="{{user.contactno}}"><br><br><input id = "altcontactno" name ="altcontactno"type="text" value="{{user.altcontactno}}">
+                        </td> 
+                      </tr>
+                         <td>Next appointment:</td>
+                        <td>
+                          <div class="input-group date form_datetime " data-date="{{moment user.appointment format ="DD MMMM YYYY hh:mm ZZ" }}" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                       <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+        <input type="hidden" id="dtp_input1" value="{{moment user.appointment format ="DD MMMM YYYY hh:mm ZZ" }}" />
+                        </td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                          <script type="text/javascript">
+  $('.form_datetime').datetimepicker({
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    });
+  $(document).ready(function() {
+
+    $("button").click(function(){
+        $.post("/editUserData",{
+          userBio: $('#userBio').val(),
+          gender: $("#gender").val(),
+          address: $("#address").val(),
+          email: $("#email").val(),
+          contactno: $("#contactno").val(),
+          altcontactno: $("#altcontactno").val(),
+          appointment: $("#dtp_input1").val()
+        }).done(function() {
+
+      window.location.replace("/users");
+        });
+
+});
+  });
+</script>
+                  
+                </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+                  <button class="btn btn-sm btn-warning" <i class="glyphicon glyphicon-save">Save</button>
+                  
+                         
+                        </span>
+                    </div>
+          </div>
+        </div>
+      </div>
+    </div>
